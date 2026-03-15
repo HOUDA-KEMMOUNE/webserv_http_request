@@ -35,7 +35,7 @@ int main()
 	memset(buffer, 0, sizeof(buffer));
 	read(client_fd, buffer, 4096);
 
-	printf("Request received:\n%s\n", buffer);
+	printf("\n%s", buffer);
 
 	std::ifstream file("index.html");
 	std::stringstream buffer_file;
