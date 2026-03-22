@@ -4,6 +4,7 @@
 #include <arpa/inet.h>
 #include <fstream>
 #include <sstream>
+#include "Request.hpp"
 
 int main()
 {
@@ -36,6 +37,9 @@ int main()
 	read(client_fd, buffer, 4096);
 
 	printf("\n%s", buffer);
+
+	Request	request;
+	parse_reques(buffer, request);
 
 	std::ifstream file("index.html");
 	std::stringstream buffer_file;

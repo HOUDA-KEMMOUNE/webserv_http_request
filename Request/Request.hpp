@@ -11,6 +11,22 @@ class	Request
 		std::string	path;
 		std::string	version;
 	public:
+		Request( void );
+		Request( const Request &old );
+		Request	&operator=( const Request &old );
+
+		void	setMethod( std::string m );
+		void	setPath( std::string p );
+		void	setVersion( std::string v );
+
+		std::string	getMethod( void ) const;
+		std::string	getPath( void ) const;
+		std::string	getVersion( void ) const;
+
+		~Request( void );
+
 };
+
+void	parse_reques(std::string buffer, Request &request);
 
 # endif
