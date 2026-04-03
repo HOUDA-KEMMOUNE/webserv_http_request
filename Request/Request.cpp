@@ -63,7 +63,6 @@ void	get_method( std::string buffer, Request &request )
 		i++;
 	}
 	
-	// std::cout << "token -> " << token << std::endl;
 	request.setMethod(token);
 }
 
@@ -77,8 +76,6 @@ void	get_path( std::string buffer, Request &request )
 	{
 		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
 			return ;
-
-		// std::cout << "{" << buffer[i] << "}\n"; 
 		
 		if (buffer[i] != '/')
 			i++;
@@ -93,7 +90,6 @@ void	get_path( std::string buffer, Request &request )
 		}
 	}
 	
-	// std::cout << "token -> " << token << std::endl;
 	request.setPath(token);
 }
 
@@ -106,34 +102,25 @@ void	get_version( std::string buffer, Request &request )
 
 	while (i < buffer.size() && i + 1 < buffer.size())
 	{
-		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
-			return ;
-
 		if (buffer[i] == ' ')
 			count++;
-
-		
-		// std::cout << "{" << buffer[i] << "}\n"; 
-		// std::cout << "count --> " <<  count << "\n"; 
-		
+		// if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+		// 	break ;
 		if (count == 2 && buffer[i] == 'H')
 		{
-			while (buffer[i] == '\r' && buffer[i + 1] == '\n')
-			{
-				// std::cout << "{" << buffer[i] << "}\n"; 
-	
+			while (i < buffer.size() && i + 1 < buffer.size())
+			{	
 				token += buffer[i];
-	
+				
+				std::cout << "buffer  -> " << buffer[i] << std::endl; 
 				if (buffer[i] == '\r' && buffer[i + 1] == '\n')
-					return ;
+					break ;
 				i++;
 			}
 		}	
 		else
 			i++;
 	}
-	
-	// std::cout << "token -> " << token << std::endl;
 	request.setVersion(token);
 }
 
@@ -141,7 +128,7 @@ void	parse_reques( std::string buffer, Request &request )
 {
 	get_method(buffer, request);
 	get_path(buffer, request);		
-	get_version(buffer, request);		
+	get_version(buffer, request);	
 	
 	std::cout << "Method ----> " << request.getMethod() << std::endl;
 	std::cout << "Path ----> " << request.getPath() << std::endl;
