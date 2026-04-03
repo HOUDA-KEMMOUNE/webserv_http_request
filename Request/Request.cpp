@@ -48,40 +48,102 @@ std::string	Request::getVersion( void ) const
 
 Request::~Request( void ) {}
 
-// void	parse_reques(std::string buffer, Request &request)
-// {
-// 	long unsigned int	i = 0;
-// 	long unsigned int	j = 0;
+void	get_method( std::string buffer, Request &request )
+{
+	size_t		i = 0;
 
-// 	std::vector<std::string>	request_line;
+	std::string	token;
 
-// 	// std::string			*tmp = new std::string;
+	while (i < buffer.size() && i + 1 < buffer.size() && buffer[i] != ' ')
+	{
+		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+			return ;
+		
+		token += buffer[i];
+		i++;
+	}
+	
+	// std::cout << "token -> " << token << std::endl;
+	request.setMethod(token);
+}
 
-// 	// while (i < buffer.size() && i + 1 < buffer.size())
-// 	// {
-// 	// 	j = 0;
-// 	// 	while (i < buffer.size() && buffer[i] != ' ')	
-// 	// 	{
-// 	// 		// std::cout << "dhdhh\n";
-// 	// 		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
-// 	// 		{
-// 	// 			std::cout << "ffff\n";
-// 	// 			return ;
-// 	// 		}
+void	get_path( std::string buffer, Request &request )
+{
+	size_t		i = 0;
 
-// 	// 		tmp[j] = buffer[i];
-// 	// 		std::cout << "tmp --> " << tmp[j] << "\nbuffer --> " << buffer[i] << std::endl;
-// 	// 		i++;
-// 	// 		j++;
-// 	// 	}
-// 	// 	request.setMethod(*tmp); // It takes just the first character 
-// 	// 	std::cout << "getMethod --> " << request.getMethod() << std::endl;
+	std::string	token;
 
-// 	// 	if (buffer[i] == '\r' && buffer[i + 1] == '\n')
-// 	// 	{
-// 	// 		std::cout << "GOUGGOOO GAGGAAA\n";
-// 	// 		return ;
-// 	// 	}
-// 	// 	i++;
-// 	// }
-// }
+	while (i < buffer.size() && i + 1 < buffer.size())
+	{
+		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+			return ;
+
+		// std::cout << "{" << buffer[i] << "}\n"; 
+		
+		if (buffer[i] != '/')
+			i++;
+		else
+		{
+			token += buffer[i];
+
+			if (buffer[i + 1] == ' ')
+				break ;
+
+			i++;
+		}
+	}
+	
+	// std::cout << "token -> " << token << std::endl;
+	request.setPath(token);
+}
+
+void	get_version( std::string buffer, Request &request )
+{
+	size_t		i = 0;
+	int			count = 0;
+
+	std::string	token;
+
+	while (i < buffer.size() && i + 1 < buffer.size())
+	{
+		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+			return ;
+
+		if (buffer[i] == ' ')
+			count++;
+
+		
+		// std::cout << "{" << buffer[i] << "}\n"; 
+		// std::cout << "count --> " <<  count << "\n"; 
+		
+		if (count == 2 && buffer[i] == 'H')
+		{
+			while (buffer[i] == '\r' && buffer[i + 1] == '\n')
+			{
+				std::cout << "{" << buffer[i] << "}\n"; 
+	
+				token += buffer[i];
+	
+				if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+					return ;
+				i++;
+			}
+		}	
+		else
+			i++;
+	}
+	
+	// std::cout << "token -> " << token << std::endl;
+	request.setVersion(token);
+}
+
+void	parse_reques( std::string buffer, Request &request )
+{
+	get_method(buffer, request);
+	get_path(buffer, request);		
+	get_version(buffer, request);		
+	
+	std::cout << "Method ----> " << request.getMethod() << std::endl;
+	std::cout << "Path ----> " << request.getPath() << std::endl;
+	std::cout << "Version ----> " << request.getVersion() << std::endl;
+}
