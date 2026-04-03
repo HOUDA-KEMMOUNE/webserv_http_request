@@ -39,7 +39,7 @@ int main()
 	printf("\n%s", buffer);
 
 	Request	request;
-	parse_reques(buffer, request);
+	// parse_reques(buffer, request);
 
 	std::ifstream file("index.html");
 	std::stringstream buffer_file;

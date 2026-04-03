@@ -48,37 +48,40 @@ std::string	Request::getVersion( void ) const
 
 Request::~Request( void ) {}
 
-void	parse_reques(std::string buffer, Request &request)
-{
-	long unsigned int	i = 0;
-	long unsigned int	j = 0;
-	std::string			*tmp = new std::string;
+// void	parse_reques(std::string buffer, Request &request)
+// {
+// 	long unsigned int	i = 0;
+// 	long unsigned int	j = 0;
 
-	while (i < buffer.size() && i + 1 < buffer.size())
-	{
-		j = 0;
-		while (i < buffer.size() && buffer[i] != ' ')	
-		{
-			// std::cout << "dhdhh\n";
-			if (buffer[i] == '\r' && buffer[i + 1] == '\n')
-			{
-				std::cout << "ffff\n";
-				return ;
-			}
+// 	std::vector<std::string>	request_line;
 
-			tmp[j] = buffer[i];
-			std::cout << "tmp --> " << tmp[j] << "\nbuffer --> " << buffer[i] << std::endl;
-			i++;
-			j++;
-		}
-		request.setMethod(*tmp); // It takes just the first character 
-		std::cout << "getMethod --> " << request.getMethod() << std::endl;
+// 	// std::string			*tmp = new std::string;
 
-		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
-		{
-			std::cout << "GOUGGOOO GAGGAAA\n";
-			return ;
-		}
-		i++;
-	}
-}
+// 	// while (i < buffer.size() && i + 1 < buffer.size())
+// 	// {
+// 	// 	j = 0;
+// 	// 	while (i < buffer.size() && buffer[i] != ' ')	
+// 	// 	{
+// 	// 		// std::cout << "dhdhh\n";
+// 	// 		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+// 	// 		{
+// 	// 			std::cout << "ffff\n";
+// 	// 			return ;
+// 	// 		}
+
+// 	// 		tmp[j] = buffer[i];
+// 	// 		std::cout << "tmp --> " << tmp[j] << "\nbuffer --> " << buffer[i] << std::endl;
+// 	// 		i++;
+// 	// 		j++;
+// 	// 	}
+// 	// 	request.setMethod(*tmp); // It takes just the first character 
+// 	// 	std::cout << "getMethod --> " << request.getMethod() << std::endl;
+
+// 	// 	if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+// 	// 	{
+// 	// 		std::cout << "GOUGGOOO GAGGAAA\n";
+// 	// 		return ;
+// 	// 	}
+// 	// 	i++;
+// 	// }
+// }
