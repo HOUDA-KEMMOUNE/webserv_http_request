@@ -120,7 +120,7 @@ void	get_version( std::string buffer, Request &request )
 		{
 			while (buffer[i] == '\r' && buffer[i + 1] == '\n')
 			{
-				std::cout << "{" << buffer[i] << "}\n"; 
+				// std::cout << "{" << buffer[i] << "}\n"; 
 	
 				token += buffer[i];
 	
