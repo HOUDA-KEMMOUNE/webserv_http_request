@@ -1,6 +1,6 @@
-#include "utils.hpp"
+#include "request_line.hpp"
 
-void	get_method( std::string buffer, Request &request )
+void	get_method( std::string &buffer, Request &request )
 {
 	size_t		i = 0;
 
@@ -18,7 +18,7 @@ void	get_method( std::string buffer, Request &request )
 	request.setMethod(token);
 }
 
-void	get_path( std::string buffer, Request &request )
+void	get_path( std::string &buffer, Request &request )
 {
 	size_t		i = 0;
 
@@ -45,7 +45,7 @@ void	get_path( std::string buffer, Request &request )
 	request.setPath(token);
 }
 
-void	get_version( std::string buffer, Request &request )
+void	get_version( std::string &buffer, Request &request )
 {
 	size_t		i = 0;
 	int			count = 0;
@@ -75,7 +75,7 @@ void	get_version( std::string buffer, Request &request )
 	request.setVersion(token);
 }
 
-void	parse_reques( std::string buffer, Request &request )
+void	parse_request( std::string &buffer, Request &request )
 {
 	get_method(buffer, request);
 	get_path(buffer, request);		

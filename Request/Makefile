@@ -1,7 +1,7 @@
 NAME = request
 CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Request.cpp
+SRC = main.cpp Request.cpp request_line.cpp request_headers.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME) clean

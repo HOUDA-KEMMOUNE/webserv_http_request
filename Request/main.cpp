@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include "Request.hpp"
+#include "request_line.hpp"
+#include "request_headers.hpp"
 
 int main()
 {
@@ -38,8 +40,13 @@ int main()
 
 	printf("\n%s", buffer);
 
-	Request	request;
-	parse_reques(buffer, request);
+	// ---------- MY PART -------------------
+	Request		request;
+	std::string str_buffer(buffer);
+	parse_request(str_buffer, request);
+	parse_headers(str_buffer, request);
+
+	// -------------------------------------
 
 	std::ifstream file("index.html");
 	std::stringstream buffer_file;
