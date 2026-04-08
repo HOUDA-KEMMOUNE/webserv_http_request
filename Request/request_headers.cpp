@@ -52,9 +52,6 @@ void	fill_lines( std::vector<std::string> &lines, std::string &buffer )
 
 	while (i < buffer.size() && i + 1 < buffer.size())
 	{
-		// if (buffer[i] == '\r' && buffer[i + 1] == '\n' && buffer[i + 2] == '\r' && buffer[i + 3] == '\n')
-		// 	return ;
-
 		if (buffer[i] == '\r' && buffer[i + 1] == '\n')
 		{
 			if (tmp.empty())
@@ -83,8 +80,6 @@ void	parse_headers( std::string &buffer, Request &request )
 	std::string							new_buffer;
 	std::map<std::string, std::string>	header;
 	std::vector<std::string>				lines;
-	// (void)request;
-	// t_headers							head;
 
 	new_buffer = skip_request_line(buffer);
 
@@ -93,34 +88,8 @@ void	parse_headers( std::string &buffer, Request &request )
 
 	fill_lines(lines, new_buffer);
 
-	// std::vector<std::string>::iterator	it = lines.begin();
-
-	// std::cout << "-------------------------------------------\n";
-	// while (it != lines.end())
-	// {
-	// 	std::cout << "line ----->  " << *it << std::endl;
-	// 	it++;
-	// }
-	// std::cout << "-------------------------------------------\n";
-
 	header = cut_header(lines);
 	request.setHeaders(header);
 	request.print_heads();
 
-	// std::map<std::string, std::string>::iterator	it = header.begin();
-
-	// std::cout << "-------------------------------------------\n";
-	// while (it != header.end())
-	// {
-	// 	std::string	key = it->first;
-	// 	std::string	value = it->second;
-	// 	std::cout << "[ " << key << " ] --> " << value << std::endl;
-	// 	it++;
-	// }
-	// std::cout << "-------------------------------------------\n";
-
-
-	// std::cout << "-----------------------------------------------------------\n";
-	// std::cout << new_buffer << std::endl;
-	// std::cout << "-----------------------------------------------------------\n";
 }
