@@ -1,8 +1,11 @@
 #include "Request.hpp"
 
-Request::Request( void ) {}
+Request::Request( void ) : method(NULL), path(NULL), version(NULL), 
+										query(NULL), stop(false)
+{}
 
-Request::Request( const Request &old ) : method(old.method), path(old.path), version(old.version)
+Request::Request( const Request &old ) : method(old.method), path(old.path), version(old.version), 
+										query(old.query), heads(old.heads), stop(old.stop)
 {}
 
 Request	&Request::operator=( const Request &old )
@@ -12,6 +15,8 @@ Request	&Request::operator=( const Request &old )
 		method = old.method;
 		path = old.path;
 		version = old.version;
+		heads = old.heads;
+		stop = old.stop;
 	}
 	return (*this);
 }
@@ -33,9 +38,19 @@ void	Request::setVersion( std::string v )
 	version = v;
 }
 
+void	Request::setQuery( std::string q )
+{
+	query = q;
+}
+
 void	Request::setHeaders( std::map<std::string, std::string> h )
 {
 	heads = h;
+}
+
+void	Request::setStop( bool s )
+{
+	stop = s;
 }
 
 // ---------------- GETTERS -----------------------------------
@@ -55,9 +70,19 @@ std::string	Request::getVersion( void ) const
 	return (version);
 }
 
+std::string	Request::getQuery( void ) const
+{
+	return (query);
+}
+
 std::map<std::string, std::string>	Request::getHeaders( void ) const
 {
 	return (heads);
+}
+
+bool								Request::getStop( void ) const
+{
+	return (stop);
 }
 
 // ---------------- PRINT -----------------------------------

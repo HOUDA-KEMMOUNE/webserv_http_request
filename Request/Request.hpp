@@ -7,6 +7,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 class	Request
 {
@@ -14,7 +15,9 @@ class	Request
 		std::string							method;
 		std::string							path;
 		std::string							version;
+		std::string							query;
 		std::map<std::string, std::string>	heads;
+		bool								stop; // if true stop !
 
 	public:
 		Request( void );
@@ -24,12 +27,16 @@ class	Request
 		void	setMethod( std::string m );
 		void	setPath( std::string p );
 		void	setVersion( std::string v );
+		void	setQuery( std::string q );
 		void	setHeaders( std::map<std::string, std::string> h );
+		void	setStop( bool s );
 
 		std::string							getMethod( void ) const;
 		std::string							getPath( void ) const;
 		std::string							getVersion( void ) const;
+		std::string							getQuery( void ) const;
 		std::map<std::string, std::string>	getHeaders( void ) const;
+		bool								getStop( void ) const;
 
 		void	print_heads( void );
 		~Request( void );
