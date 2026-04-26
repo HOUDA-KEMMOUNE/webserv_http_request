@@ -125,7 +125,7 @@ int	parse_path( std::string &path, Request &request )
 int	parse_version( std::string &version, Request &request )
 {
 	if (version == "HTTP/1.1" || version == "HTTP/1.2")
-		return (405);
+		return (505);
 	else if (version != "HTTP/1.0")
 		return (400);
 	else
@@ -139,10 +139,11 @@ int	parse_version( std::string &version, Request &request )
 
 void	parse_request( std::string &buffer, Request &request )
 {
+	// (void)request;
 	std::string		first;
 	int				i = 0;
 
-	while (buffer[i] != '\r' && buffer[i + 1] != '\n')
+	while (buffer[i] && !(buffer[i] == '\r' && buffer[i + 1] == '\n'))
 	{
 		first += buffer[i];
 		i++;
@@ -158,6 +159,9 @@ void	parse_request( std::string &buffer, Request &request )
 		return ;
 	}
 
+	std::cout << "*it --> " << *it << std::endl;
+	std::cout << "request_line.size() --> " << request_line.size() << std::endl;
+
 	if (parse_method(*it, request) == 400)
 	{
 		std::cout << "400 Bad Request" << std::endl;
@@ -165,36 +169,32 @@ void	parse_request( std::string &buffer, Request &request )
 		return ;
 	}
 
-	if (parse_version(*(it + 2), request) == 400)
+	int	p_path = parse_path(*(it + 1), request);
+	if (p_path == 400)
 	{
 		std::cout << "400 Bad Request" << std::endl;
 		request.setStop(true);
 		return ;
 	}
-	else if (parse_version(*(it + 2), request) == 405)
-	{
-		std::cout << "405 Method Not Allowed" << std::endl;
-		request.setStop(true);
-		return ;
-	}
-
-	if (parse_version(*(it + 1), request) == 400)
-	{
-		std::cout << "400 Bad Request" << std::endl;
-		request.setStop(true);
-		return ;
-	}
-	else if (parse_version(*(it + 1), request) == 403)
+	else if (p_path == 403)
 	{
 		std::cout << "403 Forbidden" << std::endl;
 		request.setStop(true);
 		return ;
 	}
 
-	// request.getMethod()
-	// Lmouchkil 7it ma3andich ig l headers ?? Anyway i have some problems here !!
+	int		p_version = parse_version(*(it + 2), request);
+	if (p_version == 400)
+	{
+		std::cout << "400 Bad Request" << std::endl;
+		request.setStop(true);
+		return ;
+	}
+	else if (p_version == 505)
+	{
+		std::cout << "505 HTTP Version Not Supported" << std::endl;
+		request.setStop(true);
+		return ;
+	}
 
-	// terminate called after throwing an instance of 'std::logic_error'
-	// what():  basic_string: construction from null is not valid
-	// make: *** [Makefile:8: all] Aborted (core dumped)
 }

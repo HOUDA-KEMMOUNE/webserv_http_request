@@ -44,7 +44,7 @@ int main()
 	Request		request;
 	std::string str_buffer(buffer);
 	parse_request(str_buffer, request);
-	parse_headers(str_buffer, request);
+	// parse_headers(str_buffer, request);
 
 	// -------------------------------------
 
