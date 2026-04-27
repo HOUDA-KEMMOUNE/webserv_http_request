@@ -57,7 +57,7 @@ int main()
 
 	// 7. Send HTTP response
 	std::string	response =
-	"HTTP/1.1 200 OK\r\n"
+	"HTTP/1.0 200 OK\r\n"
 	"Content-Type: text/html\r\n"
 	"\r\n" + html;
 

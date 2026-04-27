@@ -89,7 +89,7 @@ std::vector<std::string>	split(std::string &s, char separator)
 
 int	parse_method( std::string &method, Request &request )
 {
-	if (method != "GET" || method != "POST" || method != "DELETE")
+	if (method != "GET" && method != "POST" && method != "DELETE")
 		return (400);
 	else
 	{
@@ -105,7 +105,7 @@ int	parse_path( std::string &path, Request &request )
 
 	if (path[0] != '/')
 		return (400);
-	else if (path.find(".."))
+	else if (path.find("..") != std::string::npos)
 		return (403);
 
 	size_t	pos = path.find('?');
@@ -159,13 +159,11 @@ void	parse_request( std::string &buffer, Request &request )
 		return ;
 	}
 
-	std::cout << "*it --> " << *it << std::endl;
-	std::cout << "request_line.size() --> " << request_line.size() << std::endl;
-
 	if (parse_method(*it, request) == 400)
 	{
 		std::cout << "400 Bad Request" << std::endl;
 		request.setStop(true);
+		std::cout << "parse_method\n";
 		return ;
 	}
 
@@ -174,12 +172,15 @@ void	parse_request( std::string &buffer, Request &request )
 	{
 		std::cout << "400 Bad Request" << std::endl;
 		request.setStop(true);
+		std::cout << "parse_path\n";
+
 		return ;
 	}
 	else if (p_path == 403)
 	{
 		std::cout << "403 Forbidden" << std::endl;
 		request.setStop(true);
+		std::cout << "parse_path\n";
 		return ;
 	}
 
@@ -188,13 +189,18 @@ void	parse_request( std::string &buffer, Request &request )
 	{
 		std::cout << "400 Bad Request" << std::endl;
 		request.setStop(true);
+		std::cout << "parse_version\n";
 		return ;
 	}
 	else if (p_version == 505)
 	{
 		std::cout << "505 HTTP Version Not Supported" << std::endl;
 		request.setStop(true);
+		std::cout << "parse_version\n";
 		return ;
 	}
 
+	// std::cout << "Method -> " << request.getMethod() << std::endl;
+	// std::cout << "Path -> " << request.getPath() << std::endl;
+	// std::cout << "Version -> " << request.getVersion() << std::endl;
 }

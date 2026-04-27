@@ -1,7 +1,6 @@
 #include "Request.hpp"
 
-Request::Request( void ) : method(NULL), path(NULL), version(NULL), 
-										query(NULL), stop(false)
+Request::Request( void )
 {}
 
 Request::Request( const Request &old ) : method(old.method), path(old.path), version(old.version), 
